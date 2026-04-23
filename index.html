@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kole Menz LLC — Independent Software</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #13294B;
+      --slate: #3A506B;
+      --sienna: #8B4C39;
+      --sage: #8C9B6B;
+      --sand: #E7D3B3;
+      --offwhite: #FDF9F1;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background-color: var(--offwhite); color: var(--navy); min-height: 100vh; }
+ 
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 48px;
+      background: rgba(253,249,241,0.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(19,41,75,0.08);
+    }
+    .nav-logo { font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--navy); }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { text-decoration: none; font-size: 14px; font-weight: 500; color: var(--slate); transition: color 0.2s; }
+    .nav-links a:hover { color: var(--navy); }
+ 
+    .hero {
+      min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
+      padding: 120px 48px 80px; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; top: -200px; right: -200px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(139,76,57,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-size: 12px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--sienna); margin-bottom: 24px;
+      opacity: 0; animation: fadeUp 0.8s ease forwards 0.2s;
+    }
+    .hero-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(48px, 7vw, 96px); line-height: 1.0;
+      color: var(--navy); letter-spacing: -2px; max-width: 700px;
+      opacity: 0; animation: fadeUp 0.8s ease forwards 0.4s;
+    }
+    .hero-title em { font-style: italic; color: var(--sienna); }
+    .hero-sub {
+      margin-top: 32px; font-size: 18px; font-weight: 300; line-height: 1.6;
+      color: var(--slate); max-width: 480px;
+      opacity: 0; animation: fadeUp 0.8s ease forwards 0.6s;
+    }
+    .hero-cta {
+      margin-top: 48px; display: flex; gap: 16px; align-items: center;
+      opacity: 0; animation: fadeUp 0.8s ease forwards 0.8s;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px; background: var(--navy); color: var(--offwhite);
+      font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500;
+      text-decoration: none; border-radius: 4px; transition: background 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover { background: var(--slate); transform: translateY(-1px); }
+    .btn-secondary {
+      font-size: 14px; font-weight: 500; color: var(--slate); text-decoration: none;
+      border-bottom: 1px solid var(--slate); padding-bottom: 2px; transition: color 0.2s;
+    }
+    .btn-secondary:hover { color: var(--navy); }
+ 
+    .products { padding: 120px 48px; background: var(--navy); }
+    .section-label { font-size: 11px; font-weight: 500; letter-spacing: 2.5px; text-transform: uppercase; color: var(--sand); opacity: 0.6; margin-bottom: 16px; }
+    .section-title { font-family: 'DM Serif Display', serif; font-size: clamp(32px, 4vw, 52px); color: var(--offwhite); letter-spacing: -1px; margin-bottom: 64px; }
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2px; }
+    .product-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); padding: 48px 40px; transition: background 0.3s; }
+    .product-card:hover { background: rgba(255,255,255,0.07); }
+    .product-icon { width: 48px; height: 48px; background: linear-gradient(135deg, var(--sienna), var(--slate)); border-radius: 12px; margin-bottom: 24px; display: flex; align-items: center; justify-content: center; }
+    .product-icon svg { width: 24px; height: 24px; stroke: white; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .product-name { font-family: 'DM Serif Display', serif; font-size: 24px; color: var(--offwhite); margin-bottom: 12px; }
+    .product-desc { font-size: 14px; font-weight: 300; line-height: 1.7; color: rgba(253,249,241,0.6); margin-bottom: 24px; }
+    .product-tag { display: inline-block; font-size: 11px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: var(--sand); border: 1px solid rgba(231,211,179,0.3); padding: 4px 10px; border-radius: 2px; }
+ 
+    .about { padding: 120px 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .about-title { font-family: 'DM Serif Display', serif; font-size: clamp(32px, 4vw, 48px); line-height: 1.1; letter-spacing: -1px; color: var(--navy); margin-bottom: 24px; }
+    .about-body { font-size: 16px; font-weight: 300; line-height: 1.8; color: var(--slate); }
+    .about-body p + p { margin-top: 16px; }
+    .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .stat { padding: 32px; background: var(--sand); border-radius: 4px; }
+    .stat-number { font-family: 'DM Serif Display', serif; font-size: 40px; color: var(--navy); letter-spacing: -2px; line-height: 1; margin-bottom: 8px; }
+    .stat-label { font-size: 13px; font-weight: 400; color: var(--slate); }
+ 
+    .contact { padding: 120px 48px; background: var(--sand); display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .contact-title { font-family: 'DM Serif Display', serif; font-size: clamp(32px, 4vw, 52px); color: var(--navy); letter-spacing: -1px; margin-bottom: 16px; }
+    .contact-sub { font-size: 16px; font-weight: 300; color: var(--slate); margin-bottom: 40px; }
+    .contact-email { font-family: 'DM Serif Display', serif; font-size: 24px; color: var(--sienna); text-decoration: none; border-bottom: 2px solid var(--sienna); padding-bottom: 4px; transition: opacity 0.2s; }
+    .contact-email:hover { opacity: 0.7; }
+ 
+    .contact-address { margin-top: 32px; font-size: 14px; color: var(--slate); line-height: 1.6; }
+ 
+    footer { padding: 40px 48px; background: var(--navy); display: flex; justify-content: space-between; align-items: center; }
+    .footer-logo { font-family: 'DM Serif Display', serif; font-size: 16px; color: var(--offwhite); }
+    .footer-copy { font-size: 13px; color: rgba(253,249,241,0.4); }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { font-size: 13px; color: rgba(253,249,241,0.5); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--offwhite); }
+ 
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+ 
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .hero { padding: 100px 24px 60px; }
+      .products { padding: 80px 24px; }
+      .about { padding: 80px 24px; grid-template-columns: 1fr; gap: 48px; }
+      .contact { padding: 80px 24px; }
+      footer { padding: 32px 24px; flex-direction: column; gap: 16px; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+ 
+  <nav>
+    <div class="nav-logo">Kole Menz LLC</div>
+    <ul class="nav-links">
+      <li><a href="#products">Products</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+ 
+  <section class="hero">
+    <p class="hero-eyebrow">Independent Software — Horace, North Dakota</p>
+    <h1 class="hero-title">Building apps <em>people</em> actually use.</h1>
+    <p class="hero-sub">Kole Menz LLC develops consumer iOS applications focused on health, fitness, and personal productivity.</p>
+    <div class="hero-cta">
+      <a href="#products" class="btn-primary">View Products</a>
+      <a href="#contact" class="btn-secondary">Get in touch</a>
+    </div>
+  </section>
+ 
+  <section class="products" id="products">
+    <p class="section-label">Our Products</p>
+    <h2 class="section-title">What we build</h2>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <h3 class="product-name">Align: Calorie Counter</h3>
+        <p class="product-desc">An AI-powered nutrition and fitness tracking app. Log food instantly, track macros, plan meals, and reach your goals — intelligently.</p>
+        <span class="product-tag">Available on iOS</span>
+      </div>
+    </div>
+  </section>
+ 
+  <section class="about" id="about">
+    <div class="about-content">
+      <h2 class="about-title">Independent. Focused. North Dakota built.</h2>
+      <div class="about-body">
+        <p>Kole Menz LLC is an independent software company registered in North Dakota, dedicated to building high-quality consumer iOS applications.</p>
+        <p>We combine modern AI technology with clean, intuitive design to create apps that solve real problems for real people.</p>
+        <p>Every product we ship is thoughtfully designed, thoroughly tested, and built to last.</p>
+      </div>
+    </div>
+    <div class="about-stats">
+      <div class="stat">
+        <div class="stat-number">1</div>
+        <div class="stat-label">App on the App Store</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">ND</div>
+        <div class="stat-label">Registered in North Dakota</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">iOS</div>
+        <div class="stat-label">Platform focus</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">AI</div>
+        <div class="stat-label">Core technology</div>
+      </div>
+    </div>
+  </section>
+ 
+  <section class="contact" id="contact">
+    <p class="section-label">Contact</p>
+    <h2 class="contact-title">Get in touch</h2>
+    <p class="contact-sub">Questions, partnerships, or press inquiries — we'd love to hear from you.</p>
+    <a href="mailto:kole@kolemenzllc.com" class="contact-email">kole@kolemenzllc.com</a>
+    <p class="contact-address">Kole Menz LLC<br>253 Chestnut Dr, Horace, ND 58047<br>United States</p>
+  </section>
+ 
+  <footer>
+    <div class="footer-logo">Kole Menz LLC</div>
+    <p class="footer-copy">© 2026 Kole Menz LLC. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="https://menzkole.github.io/align.legal/privacy">Privacy</a>
+      <a href="https://menzkole.github.io/align.legal/terms">Terms</a>
+      <a href="https://menzkole.github.io/align.legal/citations">Citations</a>
+    </div>
+  </footer>
+ 
+</body>
+</html>
